@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+  <div class="img-wrap">
+    <img src="" alt="">
+  </div>
+
+</div>
+<script>
+  rand();
+
+  function rand() {
+    const imgs = document.querySelectorAll('.img-wrap img');
+
+    imgs.forEach((img) => {
+      img.setAttribute('src', `https://picsum.photos/${Math.floor(Math.random() * (1001 - 100) + 100)}/${Math.floor(Math.random() * (1001 - 100) + 100)}`)
+    })
+
+  }
+</script>
+
+</body>
+</html>
