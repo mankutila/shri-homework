@@ -1,12 +1,4 @@
-.container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.container::after {
-  content: '';
-  flex-grow: 999999999;
-}
-.img-wrap {
+.gallery__item {
   margin: 2px;
   background-color: #f6f6f6;
   position: relative;
@@ -14,7 +6,7 @@
   height: 200px;
   overflow: hidden;
 }
-img {
+.gallery__item img {
   min-width: 100%;
   max-width: 300px;
   height: 200px;

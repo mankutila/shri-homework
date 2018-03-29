@@ -1,0 +1,8 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+.gallery::after {
+  content: '';
+  flex-grow: 99999;
+}
