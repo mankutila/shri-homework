@@ -4,7 +4,12 @@ import './App.css';
 
 class App extends React.Component {
   render() {
-    return <Gallery />;
+    return (
+      <React.Fragment>
+        <h1>Галерея</h1>
+        <Gallery />
+      </React.Fragment>
+    );
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Picture} from '../Picture/Picture';
+import {Lightbox} from "../Lightbox/Lightbox";
 import './Gallery.css'
 
 
@@ -7,12 +8,14 @@ export class Gallery extends React.Component {
   constructor() {
     super();
     this.state = {
-      images: []
+      images: [],
+      photoIndex: 0,
+      isOpen: false,
     };
   }
 
   componentDidMount() {
-    const url = 'https://pixabay.com/api/?key=8532246-55268eb0f8f42379b33ae8c5d&category=nature&image_type=photo&editors_choice=true&safesearch=true';
+    const url = 'https://pixabay.com/api/?key=8532246-55268eb0f8f42379b33ae8c5d&q=nature&image_type=photo&editors_choice=true&safesearch=true&per_page=50';
 
     fetch(url)
       .then((resp) => resp.json())
@@ -29,11 +32,38 @@ export class Gallery extends React.Component {
       });
   }
 
+  openLightbox(index) {
+    this.setState({
+      isOpen: true,
+      photoIndex: index
+    });
+  }
+
   render() {
+    const { images, photoIndex, isOpen } = this.state;
     return (
-      <div className="gallery">
-        {this.state.images.map((item) => <Picture key={item.id} imgData={item}/>)};
-      </div>
+      <React.Fragment>
+        <section className="gallery">
+          {images.map((item, index) => <Picture openLightBox={this.openLightbox.bind(this)} key={item.id} index={index} imgData={item}/>)}
+        </section>
+
+        {isOpen && (
+          <Lightbox
+            src={images[photoIndex].largeImageURL}
+            onClose={() => this.setState({ isOpen: false })}
+            onMovePrev={() =>
+              this.setState({
+                photoIndex: (photoIndex + images.length - 1) % images.length,
+              })
+            }
+            onMoveNext={() =>
+              this.setState({
+                photoIndex: (photoIndex + 1) % images.length,
+              })
+            }
+          />
+        )}
+      </React.Fragment>
     );
   }
 }

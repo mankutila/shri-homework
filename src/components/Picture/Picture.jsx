@@ -8,11 +8,13 @@ export class Picture extends React.Component {
   }
 
   componentDidMount() {
-
+    if (this.image && this.image.naturalHeight > 0) {
+      this.setState({hidden: false});
+    }
   }
 
   render() {
-    let {imgData} = this.props;
+    let {imgData, openLightBox, index} = this.props;
 
     if (!imgData) {
       return null;
@@ -26,8 +28,17 @@ export class Picture extends React.Component {
         style={{
           width: width ? width + 'px' : ''
         }}
+        onClick={(e) => {
+          e.preventDefault();
+          openLightBox(index);
+        }}
       >
-        <img src={imgData.webformatURL} alt=""/>
+        <img
+          ref={(node) => this.image = node}
+          className={`gallery__item-img ${this.state.hidden ? 'gallery__item-img--hidden' : ''}`}
+          src={imgData.webformatURL}
+          onLoad={() => this.setState({hidden: false})}
+        />
       </div>
     );
   }

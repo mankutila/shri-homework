@@ -1,15 +1,20 @@
 .gallery__item {
   margin: 2px;
-  background-color: #f6f6f6;
+  background-color: #c8ccbc;
   position: relative;
   flex-grow: 1;
   height: 200px;
   overflow: hidden;
 }
-.gallery__item img {
+.gallery__item-img {
   min-width: 100%;
   max-width: 300px;
   height: 200px;
   object-fit: cover;
   vertical-align: bottom;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.gallery__item-img--hidden {
+  opacity: 0;
 }
