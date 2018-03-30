@@ -11,6 +11,7 @@ export class Lightbox extends React.Component {
       paddingRight: window.innerWidth - document.documentElement.clientWidth
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +50,14 @@ export class Lightbox extends React.Component {
     }
   }
 
+  handleClick(e) {
+    const target = e.target;
+
+    if (target === document.querySelectorAll('.lightbox')[0]) {
+      this.props.onClose();
+    }
+  }
+
   render() {
     let {src, onClose, onMovePrev, onMoveNext} = this.props;
 
@@ -58,6 +67,7 @@ export class Lightbox extends React.Component {
         style={{
           top: this.state.offsetTop + 'px'
         }}
+        onClick={this.handleClick}
       >
         <button
           className="lightbox__prev"

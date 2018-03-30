@@ -6,7 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Галерея</h1>
+        <h1>Галерея фото</h1>
         <Gallery />
       </React.Fragment>
     );
