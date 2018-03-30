@@ -3,12 +3,19 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding: 0 40px;
-  font-family: 'IBM Plex Serif', Arial, Ubuntu, Helvetica Neue, Helvetica, sans-serif;
+  font-family: Arial, Ubuntu, Helvetica Neue, Helvetica, sans-serif;
   background-color: #f5f9e9;
 }
+
 h1 {
   color: #36453b;
+  font-family: 'IBM Plex Serif', Arial, Ubuntu, Helvetica Neue, Helvetica, sans-serif;
+}
+
+.body-fixed {
+  overflow: hidden;
 }

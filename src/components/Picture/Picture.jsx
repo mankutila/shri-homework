@@ -11,6 +11,7 @@ export class Picture extends React.Component {
     if (this.image && this.image.naturalHeight > 0) {
       this.setState({hidden: false});
     }
+
   }
 
   render() {
@@ -23,7 +24,7 @@ export class Picture extends React.Component {
     let width = imgData.webformatWidth && imgData.webformatHeight && imgData.webformatWidth * 200 / imgData.webformatHeight;
 
     return (
-      <div
+      <a
         className="gallery__item"
         style={{
           width: width ? width + 'px' : ''
@@ -32,6 +33,7 @@ export class Picture extends React.Component {
           e.preventDefault();
           openLightBox(index);
         }}
+        href={imgData.largeImageURL}
       >
         <img
           ref={(node) => this.image = node}
@@ -39,7 +41,7 @@ export class Picture extends React.Component {
           src={imgData.webformatURL}
           onLoad={() => this.setState({hidden: false})}
         />
-      </div>
+      </a>
     );
   }
 }

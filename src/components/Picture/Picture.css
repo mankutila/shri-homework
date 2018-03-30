@@ -5,7 +5,13 @@
   flex-grow: 1;
   height: 200px;
   overflow: hidden;
+  transition: transform .3s ease;
 }
+
+.gallery__item:focus {
+  outline: 1px solid #c8ccbc;
+}
+
 .gallery__item-img {
   min-width: 100%;
   max-width: 300px;
@@ -13,8 +19,9 @@
   object-fit: cover;
   vertical-align: bottom;
   opacity: 1;
-  transition: opacity 0.3s ease;
+  transition: opacity .3s ease;
 }
+
 .gallery__item-img--hidden {
   opacity: 0;
 }

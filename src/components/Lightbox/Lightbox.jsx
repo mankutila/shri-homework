@@ -4,52 +4,98 @@ import './Lightbox.css'
 export class Lightbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loading: true};
+    this.state = {
+      imageLoading: true,
+      hidden: true,
+      offsetTop: 0,
+      paddingRight: window.innerWidth - document.documentElement.clientWidth
+    };
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
+    this.setState({
+      offsetTop: document.body.scrollTop || window.pageYOffset,
+      hidden: false
+    });
+
     if (this.image && this.image.naturalHeight > 0) {
-      this.setState({loading: false});
+      this.setState({imageLoading: false});
+    }
+    document.addEventListener("keydown", this.handleKeyDown);
+    document.body.classList.add('body-fixed');
+    document.body.style.paddingRight = 40 + this.state.paddingRight + 'px';
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+    document.body.classList.remove('body-fixed');
+    document.body.style.paddingRight = '40px';
+  }
+
+  handleKeyDown(e) {
+    const key = e.keyCode;
+
+    if (key === 27) {
+      this.props.onClose();
+    }
+    if (key === 39) {
+      this.props.onMoveNext();
+      this.setState({imageLoading: true});
+    }
+    if (key === 37) {
+      this.props.onMovePrev();
+      this.setState({imageLoading: true});
     }
   }
 
   render() {
-    let { src, onClose, onMovePrev, onMoveNext} = this.props;
+    let {src, onClose, onMovePrev, onMoveNext} = this.props;
 
     return (
-      <div className="lightbox">
+      <div
+        className={`lightbox ${!this.state.hidden ? 'lightbox--visible' : ''}`}
+        style={{
+          top: this.state.offsetTop + 'px'
+        }}
+      >
         <button
           className="lightbox__prev"
           onClick={() => {
             onMovePrev();
-            this.setState({loading: true})
+            this.setState({imageLoading: true})
           }}
-          aria-label="Предыдущее фото">Предыдущее фото</button>
+          aria-label="Предыдущее фото">Предыдущее фото
+        </button>
 
         <img
           ref={(node) => this.image = node}
-          className={`lightbox__img ${this.state.loading ? 'lightbox__img--hidden' : ''}`}
+          className={`lightbox__img ${this.state.imageLoading ? 'lightbox__img--hidden' : ''}`}
           src={src}
           alt=""
-          onLoad={() => this.setState({loading: false})}
+          onLoad={() => this.setState({imageLoading: false})}
         />
 
-        {this.state.loading ? <div className="spinner">load..</div> : ''}
+        {this.state.imageLoading ? <div className="spinner">Загрузка...</div> : ''}
 
         <button
           className="lightbox__next"
           onClick={() => {
             onMoveNext();
-            this.setState({loading: true})
+            this.setState({imageLoading: true})
           }}
-          aria-label="Следующее фото">Следующее фото</button>
+          aria-label="Следующее фото">Следующее фото
+        </button>
+
         <button
           className="lightbox__close"
           onClick={() => {
             onClose();
-            this.setState({loading: true})
+            this.setState({imageLoading: true})
           }}
-          aria-label="Закрыть">Закрыть</button>
+          aria-label="Закрыть">Закрыть
+        </button>
+
       </div>
     )
 
