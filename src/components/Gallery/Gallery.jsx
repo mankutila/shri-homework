@@ -11,6 +11,7 @@ export class Gallery extends React.Component {
       photoIndex: 0,
       isOpen: false,
     };
+    this.openLightbox = this.openLightbox.bind(this);
   }
 
   componentDidMount() {
@@ -26,7 +27,6 @@ export class Gallery extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-
   }
 
   openLightbox(index) {
@@ -41,7 +41,7 @@ export class Gallery extends React.Component {
     return (
       <React.Fragment>
         <section className="gallery">
-          {images.map((item, index) => <Picture openLightBox={this.openLightbox.bind(this)}
+          {images.map((item, index) => <Picture openLightBox={this.openLightbox}
                                                 key={item.id}
                                                 index={index}
                                                 imgData={item}/>)}
