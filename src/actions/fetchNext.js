@@ -1,5 +1,5 @@
 export function fetchNext() {
-  return async function (dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch({
       type: 'FEED_LOADING'
     });
