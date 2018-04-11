@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './Picture.css'
 
-export class Picture extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {hidden: true};
-  }
+export class Picture extends Component {
+  state = {
+    hidden: true
+  };
 
   componentDidMount() {
     if (this.image && this.image.naturalHeight > 0) {
@@ -40,6 +39,7 @@ export class Picture extends React.Component {
           className={`gallery__item-img ${this.state.hidden ? 'gallery__item-img--hidden' : ''}`}
           src={imgData.webformatURL}
           onLoad={() => this.setState({hidden: false})}
+          alt={`Tags: ${imgData.tags}`}
         />
       </a>
     );

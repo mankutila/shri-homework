@@ -1,0 +1,10 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "jsx-quotes": ["warn", "prefer-double"]
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  }
+}

@@ -1,32 +1,44 @@
-import React from 'react';
-import {Picture} from '../Picture/Picture';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
+import {Picture} from "../Picture/Picture";
 import {Lightbox} from "../Lightbox/Lightbox";
+import {Infinite} from "../Infinite/Infinite";
+
+import {fetchNext} from "../../actions/fetchNext";
+
 import './Gallery.css'
 
-export class Gallery extends React.Component {
+
+class GalleryComponent extends Component {
   constructor() {
     super();
     this.state = {
-      images: [],
       photoIndex: 0,
-      isOpen: false,
+      isOpen: false
     };
     this.openLightbox = this.openLightbox.bind(this);
   }
 
-  componentDidMount() {
+  load() {
     const url = 'https://pixabay.com/api/?key=8532246-55268eb0f8f42379b33ae8c5d&q=architecture&image_type=photo&editors_choice=true&safesearch=true&per_page=50';
-
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         let results = data.hits;
-        this.setState({images: results})
+        console.log(results);
+        this.props.dispatch({
+          type: 'APPEND_IMAGES',
+          images: results
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  componentDidMount() {
+    this.load();
   }
 
   openLightbox(index) {
@@ -37,9 +49,10 @@ export class Gallery extends React.Component {
   }
 
   render() {
-    const {images, photoIndex, isOpen} = this.state;
+    const {photoIndex, isOpen} = this.state,
+          images = this.props.images;
     return (
-      <React.Fragment>
+      <Infinite fetchNext={fetchNext}>
         <section className="gallery">
           {images.map((item, index) => <Picture openLightBox={this.openLightbox}
                                                 key={item.id}
@@ -63,7 +76,15 @@ export class Gallery extends React.Component {
             }
           />
         )}
-      </React.Fragment>
+      </Infinite>
     );
   }
 }
+
+const stateToProps = (state) => ({
+  images: state.images,
+  page: state.page,
+  error: state.error
+});
+
+export const Gallery = connect(stateToProps)(GalleryComponent);
