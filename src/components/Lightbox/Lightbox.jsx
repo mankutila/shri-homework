@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import './Lightbox.css'
 
-export class Lightbox extends React.Component {
+export class LightboxComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,12 +55,14 @@ export class Lightbox extends React.Component {
     const target = e.target;
 
     if (target === document.querySelectorAll('.lightbox')[0]) {
-      this.props.onClose();
+      this.props.dispatch({
+        type: 'CLOSE_LIGHTBOX'
+      })
     }
   }
 
   render() {
-    let {src, onClose, onMovePrev, onMoveNext} = this.props;
+    let {images, photoIndex} = this.props;
 
     return (
       <div
@@ -72,7 +75,10 @@ export class Lightbox extends React.Component {
         <button
           className="lightbox__prev"
           onClick={() => {
-            onMovePrev();
+            this.props.dispatch({
+              type: 'TOGGLE_PHOTO',
+              photoIndex: (photoIndex + images.length - 1) % images.length
+            });
             this.setState({imageLoading: true})
           }}
           aria-label="Предыдущее фото">Предыдущее фото
@@ -81,7 +87,7 @@ export class Lightbox extends React.Component {
         <img
           ref={(node) => this.image = node}
           className={`lightbox__img ${this.state.imageLoading ? 'lightbox__img--hidden' : ''}`}
-          src={src}
+          src={images[photoIndex].largeImageURL}
           alt=""
           onLoad={() => this.setState({imageLoading: false})}
         />
@@ -91,7 +97,10 @@ export class Lightbox extends React.Component {
         <button
           className="lightbox__next"
           onClick={() => {
-            onMoveNext();
+            this.props.dispatch({
+              type: 'TOGGLE_PHOTO',
+              photoIndex: (photoIndex + 1) % images.length
+            });
             this.setState({imageLoading: true})
           }}
           aria-label="Следующее фото">Следующее фото
@@ -100,15 +109,22 @@ export class Lightbox extends React.Component {
         <button
           className="lightbox__close"
           onClick={() => {
-            onClose();
-            this.setState({imageLoading: true})
+            this.props.dispatch({
+              type: 'CLOSE_LIGHTBOX'
+            })
           }}
           aria-label="Закрыть">Закрыть
         </button>
 
       </div>
     )
-
   }
-
 }
+
+const stateToProps = (state) => ({
+  images: state.images,
+  error: state.error,
+  photoIndex: state.photoIndex
+});
+
+export const Lightbox = connect(stateToProps)(LightboxComponent);
