@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 
-
 import {Gallery} from "../Gallery/Gallery";
 import './App.css';
-
 
 import {createStore, compose, applyMiddleware} from 'redux';
 import {galleryReducer} from "../../reducers/galleryReducer";
@@ -29,9 +27,7 @@ const store = createStore(
   )
 );
 
-
-
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <Provider store={store}>

@@ -17,23 +17,26 @@ class PictureListComponent extends Component {
   }
 
   render() {
-    const {images} = this.props;
+    const {images, total, loading} = this.props;
 
     return (
-        <React.Fragment>
-          <section className="gallery">
-            {images.map((item, index) => <Picture openLightBox={this.openLightbox}
-                                                  key={index}
-                                                  index={index}
-                                                  imgData={item}/>)}
-          </section>
-        </React.Fragment>
+      <section className="gallery">
+
+        {total === 0 && !loading && <div className="gallery__empty">Нет никаких изображений по этой теме.</div>}
+
+        {images.map((item, index) => <Picture openLightBox={this.openLightbox}
+                                              key={index}
+                                              index={index}
+                                              imgData={item}/>)}
+      </section>
     );
   }
 }
 
 const stateToProps = (state) => ({
   images: state.images,
+  total: state.total,
+  loading: state.loading,
   error: state.error
 });
 

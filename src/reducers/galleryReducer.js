@@ -5,7 +5,8 @@ const initialState = {
   error: null,
   total: 0,
   isOpen: false,
-  photoIndex: 0
+  photoIndex: 0,
+  allLoaded: false
   // isOpen: false,
 };
 
@@ -46,7 +47,7 @@ export const galleryReducer = function(state = initialState, action) {
         ...state,
         isOpen: false
       };
-    case 'TOGGLE_PHOTO':
+    case 'TOGGLE_IMAGE':
       return {
         ...state,
         photoIndex: action.photoIndex
@@ -55,6 +56,11 @@ export const galleryReducer = function(state = initialState, action) {
       return {
         ...state,
         photoIndex: action.photoIndex
+      };
+    case 'ALL_LOADED':
+      return {
+        ...state,
+        allLoaded: true
       };
     default:
       return state

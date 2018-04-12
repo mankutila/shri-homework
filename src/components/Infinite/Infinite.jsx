@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import './Infinite.css';
+
 const THRESHOLD = 500;
 
 export class InfiniteComponent extends Component {
@@ -19,10 +21,6 @@ export class InfiniteComponent extends Component {
     document.removeEventListener('scroll', this.onScroll);
   }
 
-  /*componentDidUpdate() {
-    this.onScroll();
-  }*/
-
   onScroll() {
     if (!this.container || this.props.loading) {
       return;
@@ -32,13 +30,12 @@ export class InfiniteComponent extends Component {
       containerHeight = this.container.clientHeight,
       windowHeight = window.innerHeight;
 
-    if (scrollTop + windowHeight >= containerHeight - THRESHOLD) {
+    if (scrollTop + windowHeight >= containerHeight - THRESHOLD && !this.props.allLoaded) {
       this.nextPage();
     }
   }
 
   async nextPage() {
-
     try {
       await this.props.fetchImages();
     } catch(error) {
@@ -50,34 +47,26 @@ export class InfiniteComponent extends Component {
 
   }
 
-  /*{<div className="infinite" ref={(container) => this.container = container}>
-        {this.props.children}
-
-
-      </div>}
-
-  */
-
   render() {
     return (
       <div ref={(container) => this.container = container}>
+
         {this.props.children}
 
         {this.props.loading && (
-          <div className="infinite__spinner">
-            <div style={{backgroundColor: 'red'}} className="spinner"/>
+          <div className="loading">
+            <div className="loader">Загрузка...</div>
           </div>
         )}
+
       </div>
-
-
     );
   }
-
 }
 
 const stateToProps = (state) => ({
   loading: state.loading,
+  allLoaded: state.allLoaded,
   error: state.error
 });
 

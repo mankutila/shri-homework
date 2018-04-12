@@ -76,7 +76,7 @@ export class LightboxComponent extends Component {
           className="lightbox__prev"
           onClick={() => {
             this.props.dispatch({
-              type: 'TOGGLE_PHOTO',
+              type: 'TOGGLE_IMAGE',
               photoIndex: (photoIndex + images.length - 1) % images.length
             });
             this.setState({imageLoading: true})
@@ -98,7 +98,7 @@ export class LightboxComponent extends Component {
           className="lightbox__next"
           onClick={() => {
             this.props.dispatch({
-              type: 'TOGGLE_PHOTO',
+              type: 'TOGGLE_IMAGE',
               photoIndex: (photoIndex + 1) % images.length
             });
             this.setState({imageLoading: true})

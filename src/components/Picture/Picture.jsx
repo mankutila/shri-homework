@@ -10,7 +10,6 @@ export class Picture extends Component {
     if (this.image && this.image.naturalHeight > 0) {
       this.setState({hidden: false});
     }
-
   }
 
   render() {
