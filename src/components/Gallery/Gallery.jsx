@@ -12,10 +12,10 @@ import './Gallery.css'
 class GalleryComponent extends Component {
   constructor() {
     super();
-    this.state = {
+    /*this.state = {
       photoIndex: 0,
       isOpen: false
-    };
+    };*/
     this.openLightbox = this.openLightbox.bind(this);
     this.fetchImages = this.fetchImages.bind(this);
   }
@@ -31,10 +31,10 @@ class GalleryComponent extends Component {
     fetch('https://cors-anywhere.herokuapp.com/' + url) //proxy for cors requests
       .then((resp) => resp.json())
       .then((data) => {
-        this.props.dispatch({
+        /*this.props.dispatch({
           type: 'SET_TOTAL',
           total: data.total
-        });
+        });*/
         this.props.dispatch({
           type: 'APPEND_IMAGES',
           images: data.hits,
@@ -56,15 +56,15 @@ class GalleryComponent extends Component {
   }
 
   openLightbox(index) {
-    this.setState({
-      isOpen: true,
+    this.props.dispatch({
+      type: 'OPEN_LIGHTBOX',
       photoIndex: index
     });
   }
 
   render() {
-    const {photoIndex, isOpen} = this.state,
-          images = this.props.images;
+    const {photoIndex, isOpen, images} = this.props;
+
     return (
       <Infinite fetchImages={this.fetchImages}>
         <section className="gallery">
@@ -82,15 +82,21 @@ class GalleryComponent extends Component {
         {isOpen && (
           <Lightbox
             src={images[photoIndex].largeImageURL}
-            onClose={() => this.setState({isOpen: false})}
+            onClose={() =>
+              this.props.dispatch({
+                type: 'CLOSE_LIGHTBOX'
+              })
+            }
             onMovePrev={() =>
-              this.setState({
-                photoIndex: (photoIndex + images.length - 1) % images.length,
+              this.props.dispatch({
+                type: 'TOGGLE_PHOTO',
+                photoIndex: (photoIndex + images.length - 1) % images.length
               })
             }
             onMoveNext={() =>
-              this.setState({
-                photoIndex: (photoIndex + 1) % images.length,
+              this.props.dispatch({
+                type: 'TOGGLE_PHOTO',
+                photoIndex: (photoIndex + 1) % images.length
               })
             }
           />
@@ -104,7 +110,9 @@ const stateToProps = (state) => ({
   images: state.images,
   loading: state.loading,
   page: state.page,
-  error: state.error
+  error: state.error,
+  isOpen: state.isOpen,
+  photoIndex: state.photoIndex
 });
 
 export const Gallery = connect(stateToProps)(GalleryComponent);

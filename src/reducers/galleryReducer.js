@@ -3,7 +3,9 @@ const initialState = {
   loading: false,
   page: 1,
   error: null,
-  total: 0
+  total: 0,
+  isOpen: false,
+  photoIndex: 0
   // isOpen: false,
 };
 
@@ -32,6 +34,27 @@ export const galleryReducer = function(state = initialState, action) {
       return {
         ...state,
         total: action.total
+      };
+    case 'OPEN_LIGHTBOX':
+      return {
+        ...state,
+        isOpen: true,
+        photoIndex: action.photoIndex
+      };
+    case 'CLOSE_LIGHTBOX':
+      return {
+        ...state,
+        isOpen: false
+      };
+    case 'TOGGLE_PHOTO':
+      return {
+        ...state,
+        photoIndex: action.photoIndex
+      };
+    case 'NEXT_PHOTO':
+      return {
+        ...state,
+        photoIndex: action.photoIndex
       };
     default:
       return state
