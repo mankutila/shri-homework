@@ -7,7 +7,6 @@ const initialState = {
   isOpen: false,
   photoIndex: 0,
   allLoaded: false
-  // isOpen: false,
 };
 
 export const galleryReducer = function(state = initialState, action) {

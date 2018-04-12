@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+
+import {addBodyStyles, removeBodyStyles} from '../../utils/lightboxUtils'
+
 import './Lightbox.css'
 
 export class LightboxComponent extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       imageLoading: true,
       hidden: true,
@@ -13,6 +16,9 @@ export class LightboxComponent extends Component {
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.movePrev = this.movePrev.bind(this);
+    this.moveNext = this.moveNext.bind(this);
+    this.closeLightBox = this.closeLightBox.bind(this);
   }
 
   componentDidMount() {
@@ -25,29 +31,49 @@ export class LightboxComponent extends Component {
       this.setState({imageLoading: false});
     }
     document.addEventListener("keydown", this.handleKeyDown);
-    document.body.classList.add('body-fixed');
-    document.body.style.paddingRight = 40 + this.state.paddingRight + 'px';
+    addBodyStyles(this.state);
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
-    document.body.classList.remove('body-fixed');
-    document.body.style.paddingRight = '40px';
+    removeBodyStyles();
+  }
+
+  movePrev() {
+    let {images, photoIndex} = this.props;
+    this.props.dispatch({
+      type: 'TOGGLE_IMAGE',
+      photoIndex: (photoIndex + images.length - 1) % images.length
+    });
+    this.setState({imageLoading: true});
+  }
+
+  moveNext() {
+    let {images, photoIndex} = this.props;
+    this.props.dispatch({
+      type: 'TOGGLE_IMAGE',
+      photoIndex: (photoIndex + 1) % images.length
+    });
+    this.setState({imageLoading: true});
+  }
+
+  closeLightBox() {
+    this.props.dispatch({
+      type: 'CLOSE_LIGHTBOX'
+    })
   }
 
   handleKeyDown(e) {
     const key = e.keyCode;
 
     if (key === 27) {
-      this.props.onClose();
-    }
-    if (key === 39) {
-      this.props.onMoveNext();
-      this.setState({imageLoading: true});
+      this.closeLightBox();
     }
     if (key === 37) {
-      this.props.onMovePrev();
-      this.setState({imageLoading: true});
+      this.movePrev();
+    }
+    if (key === 39) {
+      this.moveNext();
     }
   }
 
@@ -55,9 +81,7 @@ export class LightboxComponent extends Component {
     const target = e.target;
 
     if (target === document.querySelectorAll('.lightbox')[0]) {
-      this.props.dispatch({
-        type: 'CLOSE_LIGHTBOX'
-      })
+      this.closeLightBox();
     }
   }
 
@@ -65,56 +89,26 @@ export class LightboxComponent extends Component {
     let {images, photoIndex} = this.props;
 
     return (
-      <div
-        className={`lightbox ${!this.state.hidden ? 'lightbox--visible' : ''}`}
+      <div className={`lightbox ${!this.state.hidden ? 'lightbox--visible' : ''}`}
         style={{
           top: this.state.offsetTop + 'px'
         }}
-        onClick={this.handleClick}
-      >
-        <button
-          className="lightbox__prev"
-          onClick={() => {
-            this.props.dispatch({
-              type: 'TOGGLE_IMAGE',
-              photoIndex: (photoIndex + images.length - 1) % images.length
-            });
-            this.setState({imageLoading: true})
-          }}
-          aria-label="Предыдущее фото">Предыдущее фото
-        </button>
+        onClick={this.handleClick}>
 
-        <img
-          ref={(node) => this.image = node}
+        <button className="lightbox__prev" onClick={this.movePrev} aria-label="Предыдущее фото">Предыдущее фото</button>
+
+        <img ref={(node) => this.image = node}
           className={`lightbox__img ${this.state.imageLoading ? 'lightbox__img--hidden' : ''}`}
           src={images[photoIndex].largeImageURL}
-          alt=""
+          alt={`Tags: ${images[photoIndex].tags}`}
           onLoad={() => this.setState({imageLoading: false})}
         />
 
         {this.state.imageLoading ? <div className="spinner">Загрузка...</div> : ''}
 
-        <button
-          className="lightbox__next"
-          onClick={() => {
-            this.props.dispatch({
-              type: 'TOGGLE_IMAGE',
-              photoIndex: (photoIndex + 1) % images.length
-            });
-            this.setState({imageLoading: true})
-          }}
-          aria-label="Следующее фото">Следующее фото
-        </button>
+        <button className="lightbox__next" onClick={this.moveNext} aria-label="Следующее фото">Следующее фото</button>
 
-        <button
-          className="lightbox__close"
-          onClick={() => {
-            this.props.dispatch({
-              type: 'CLOSE_LIGHTBOX'
-            })
-          }}
-          aria-label="Закрыть">Закрыть
-        </button>
+        <button className="lightbox__close" onClick={this.closeLightBox} aria-label="Закрыть">Закрыть</button>
 
       </div>
     )
