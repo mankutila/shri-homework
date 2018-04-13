@@ -10,12 +10,12 @@ import './Gallery.css'
 
 class GalleryComponent extends Component {
 
-  fetchImages = (firstLoad = false) => {
+  fetchImages = (tag, firstLoad = false) => {
     const COUNT = 50,
-          page = this.props.page,
+          page = firstLoad ? 1 : this.props.page,
           url = `https://pixabay.com/api/?`+
                 `key=8532246-55268eb0f8f42379b33ae8c5d`+
-                `&q=architecture`+
+                `&q=${tag}`+
                 `&image_type=photo`+
                 `&editors_choice=true&safesearch=true`+
                 `&per_page=${COUNT}`+
@@ -40,36 +40,28 @@ class GalleryComponent extends Component {
           page: page + 1,
           loading: false
         });
-        // console.log('TOTAL:', this.props);
-        // console.log(data);
-        // console.log('IMAGES LENGTH:', this.props.images.length);
         if (this.props.total === this.props.images.length) {
-          this.props.dispatch({type: 'ALL_LOADED'});
+          this.props.dispatch({ type: 'ALL_LOADED' });
         }
       })
-      .catch((error) => {
-        this.props.dispatch({
-          type: 'LOAD_ERROR',
-          error
-        });
-      });
+      .catch(() => this.props.dispatch({ type: 'LOAD_ERROR' }));
   };
 
   componentDidMount() {
-    this.fetchImages(true);
+    this.fetchImages(this.props.current, true);
   }
 
   render() {
-    const {isOpen} = this.props;
+    const { isOpen } = this.props;
 
     return (
-      <Infinite fetchImages={this.fetchImages}>
+      <Infinite fetchImages={ this.fetchImages }>
 
-        <Tags/>
+        <Tags fetchImages={ this.fetchImages } />
 
         <PictureList />
 
-        {isOpen && <Lightbox />}
+        { isOpen && <Lightbox /> }
 
       </Infinite>
     );
@@ -82,8 +74,10 @@ const stateToProps = (state) => ({
   page: state.images.page,
   error: state.images.error,
   total: state.images.total,
+  reset: state.images.reset,
   isOpen: state.lightbox.isOpen,
   photoIndex: state.lightbox.photoIndex,
+  current: state.tags.current,
 });
 
 export const Gallery = connect(stateToProps)(GalleryComponent);

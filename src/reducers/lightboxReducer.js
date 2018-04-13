@@ -1,29 +1,40 @@
 const initialState = {
   isOpen: false,
   photoIndex: 0,
+  error: false
 };
 
-export const lightboxReducer = function(state = initialState, action) {
+export default function(state = initialState, action) {
 
   if (action.type === 'OPEN_LIGHTBOX') {
     return {
       ...state,
       isOpen: true,
-      photoIndex: action.photoIndex
+      photoIndex: action.photoIndex,
+      error: false
     };
   }
 
   if (action.type === 'CLOSE_LIGHTBOX') {
     return {
       ...state,
-      isOpen: false
+      isOpen: false,
+      error: false
     };
   }
 
   if (action.type === 'TOGGLE_IMAGE') {
     return {
       ...state,
-      photoIndex: action.photoIndex
+      photoIndex: action.photoIndex,
+      error: false
+    };
+  }
+
+  if (action.type === 'IMAGE_ERROR') {
+    return {
+      ...state,
+      error: true
     };
   }
 

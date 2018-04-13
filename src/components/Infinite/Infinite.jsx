@@ -31,14 +31,12 @@ export class InfiniteComponent extends Component {
 
   async nextPage() {
     try {
-      await this.props.fetchImages();
+      await this.props.fetchImages(this.props.current);
     } catch (error) {
       this.props.dispatch({
-        type: 'LOAD_ERROR',
-        error
+        type: 'LOAD_ERROR'
       });
     }
-
   }
 
   render() {
@@ -61,7 +59,8 @@ export class InfiniteComponent extends Component {
 const stateToProps = (state) => ({
   loading: state.images.loading,
   allLoaded: state.images.allLoaded,
-  error: state.images.error
+  error: state.images.error,
+  current: state.tags.current
 });
 
 export const Infinite = connect(stateToProps)(InfiniteComponent);

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { Picture } from "../Picture/Picture";
 
+import './PictureList.css';
+
 class PictureListComponent extends Component {
   constructor() {
     super();
@@ -17,19 +19,19 @@ class PictureListComponent extends Component {
   }
 
   render() {
-    const {images, total, loading} = this.props;
+    const { images, total, loading, error } = this.props;
 
     return (
       <section className="gallery">
 
-        {total === 0 && !loading && <div className="gallery__empty">Нет никаких изображений по этой теме.</div>}
+        { total === 0 && !loading && !error && <div className="gallery__message">Нет никаких изображений по этой теме.</div> }
 
+        { error && !loading && <div className="gallery__message">Ошибка загрузки изображений :(</div> }
 
-
-        {images.map((item, index) => <Picture openLightBox={this.openLightbox}
+        { images.map((item, index) => <Picture openLightBox={this.openLightbox}
                                               key={index}
                                               index={index}
-                                              imgData={item}/>)}
+                                              imgData={item}/>) }
       </section>
     );
   }

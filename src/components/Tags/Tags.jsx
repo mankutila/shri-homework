@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+
+import './Tags.css';
 
 const TAGS = [
   {
@@ -15,25 +18,39 @@ const TAGS = [
   }
 ];
 
-export class Tags extends Component {
+function TagsComponent({current, fetchImages, dispatch}) {
 
+  return (
+    <section className="tags">
+      {TAGS.map( ({ title, slug }, index ) => (
+        <button
+          key={slug}
+          className={`tag ${slug === current ? 'tag--current' : ''}`}
+          onClick={() => {
 
-  render() {
-    return (
-      <section className="tags">
-        {TAGS.map(({title, slug}, index) => (
-          <button
-            key={slug}
-            className={`tag`}
-            /*onClick={() => dispatch({
-              type: 'SET_TAG',
-              tag: slug
-            })}*/
-          >
-            {title}
-          </button>
-        ))}
-      </section>
-    );
-  }
+            if (slug !== current) {
+              dispatch({
+                type: 'SET_TAG',
+                tag: slug
+              });
+              dispatch({
+                type: 'RESET_IMAGES'
+              });
+              fetchImages(slug, true);
+            }
+
+          }}
+        >
+          {title}
+        </button>
+      ))}
+    </section>
+  );
+
 }
+
+const stateToProps = (state) => ({
+  current: state.tags.current
+});
+
+export const Tags = connect(stateToProps)(TagsComponent);

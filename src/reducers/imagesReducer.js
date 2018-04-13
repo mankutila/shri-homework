@@ -2,12 +2,12 @@ const initialState = {
   images: [],
   loading: false,
   page: 1,
-  error: null,
+  error: false,
   total: 0,
   allLoaded: false
 };
 
-export const imagesReducer = function(state = initialState, action) {
+export default function(state = initialState, action) {
 
   if (action.type === 'APPEND_IMAGES') {
     return {
@@ -28,7 +28,7 @@ export const imagesReducer = function(state = initialState, action) {
   if (action.type === 'LOAD_ERROR') {
     return {
       ...state,
-      error: action.error,
+      error: true,
       loading: false
     };
   }
@@ -45,6 +45,10 @@ export const imagesReducer = function(state = initialState, action) {
       ...state,
       allLoaded: true
     };
+  }
+
+  if (action.type === 'RESET_IMAGES') {
+    return initialState;
   }
 
   return state;

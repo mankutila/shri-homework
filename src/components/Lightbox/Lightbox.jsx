@@ -77,8 +77,12 @@ export class LightboxComponent extends Component {
     }
   };
 
+  imageError = () => {
+    this.props.dispatch({type: 'IMAGE_ERROR'});
+  };
+
   render() {
-    let {images, photoIndex} = this.props;
+    let {images, photoIndex, error} = this.props;
 
     return (
       <div className={`lightbox ${!this.state.hidden ? 'lightbox--visible' : ''}`}
@@ -90,13 +94,16 @@ export class LightboxComponent extends Component {
         <button className="lightbox__prev" onClick={this.movePrev} aria-label="Предыдущее фото">Предыдущее фото</button>
 
         <img ref={(node) => this.image = node}
-          className={`lightbox__img ${this.state.imageLoading ? 'lightbox__img--hidden' : ''}`}
+          className={`lightbox__img ${this.state.imageLoading || error ? 'lightbox__img--hidden' : ''}`}
           src={images[photoIndex].largeImageURL}
           alt={`Tags: ${images[photoIndex].tags}`}
           onLoad={() => this.setState({imageLoading: false})}
+          onError={this.imageError}
         />
 
-        {this.state.imageLoading ? <div className="spinner">Загрузка...</div> : ''}
+        { this.state.imageLoading ? <div className="spinner">Загрузка...</div> : '' }
+
+        { !this.state.imageLoading && error ? <div className="lightbox__message">Ошибка при загрузке изображения</div> : '' }
 
         <button className="lightbox__next" onClick={this.moveNext} aria-label="Следующее фото">Следующее фото</button>
 
@@ -109,7 +116,7 @@ export class LightboxComponent extends Component {
 
 const stateToProps = (state) => ({
   images: state.images.images,
-  error: state.images.error,
+  error: state.lightbox.error,
   photoIndex: state.lightbox.photoIndex
 });
 
