@@ -1,5 +1,5 @@
 {
-  "extends": "react-app",
+  "extends": ["react-app"],
   "rules": {
     "jsx-quotes": ["warn", "prefer-double"]
   },

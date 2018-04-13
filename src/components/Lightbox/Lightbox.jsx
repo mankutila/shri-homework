@@ -1,69 +1,61 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import {addBodyStyles, removeBodyStyles} from '../../utils/lightboxUtils'
+import { addBodyStyles, removeBodyStyles } from '../../utils/lightboxUtils';
 
-import './Lightbox.css'
+import './Lightbox.css';
 
 export class LightboxComponent extends Component {
-  constructor() {
-    super();
-    this.state = {
-      imageLoading: true,
-      hidden: true,
-      offsetTop: 0,
-      paddingRight: window.innerWidth - document.documentElement.clientWidth
-    };
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.movePrev = this.movePrev.bind(this);
-    this.moveNext = this.moveNext.bind(this);
-    this.closeLightBox = this.closeLightBox.bind(this);
-  }
+  state = {
+    imageLoading: true,
+    hidden: true,
+    offsetTop: 0,
+    paddingRight: window.innerWidth - document.documentElement.clientWidth,
+  };
 
   componentDidMount() {
     this.setState({
       offsetTop: document.body.scrollTop || window.pageYOffset,
-      hidden: false
+      hidden: false,
     });
 
     if (this.image && this.image.naturalHeight > 0) {
-      this.setState({imageLoading: false});
+      this.setState({ imageLoading: false });
     }
-    document.addEventListener("keydown", this.handleKeyDown);
+    document.addEventListener('keydown', this.handleKeyDown);
     addBodyStyles(this.state);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown);
+    document.removeEventListener('keydown', this.handleKeyDown);
     removeBodyStyles();
   }
 
-  movePrev() {
-    let {images, photoIndex} = this.props;
+  movePrev = () => {
+    const { images, photoIndex } = this.props;
     this.props.dispatch({
       type: 'TOGGLE_IMAGE',
       photoIndex: (photoIndex + images.length - 1) % images.length
     });
-    this.setState({imageLoading: true});
-  }
+    this.setState({ imageLoading: true });
+  };
 
-  moveNext() {
-    let {images, photoIndex} = this.props;
+  moveNext = () => {
+    const {images, photoIndex} = this.props;
     this.props.dispatch({
       type: 'TOGGLE_IMAGE',
       photoIndex: (photoIndex + 1) % images.length
     });
     this.setState({imageLoading: true});
-  }
+  };
 
-  closeLightBox() {
+  closeLightBox = () => {
     this.props.dispatch({
       type: 'CLOSE_LIGHTBOX'
     })
-  }
+  };
 
-  handleKeyDown(e) {
+  handleKeyDown = (e) => {
     const key = e.keyCode;
 
     if (key === 27) {
@@ -75,15 +67,15 @@ export class LightboxComponent extends Component {
     if (key === 39) {
       this.moveNext();
     }
-  }
+  };
 
-  handleClick(e) {
+  handleClick = (e) => {
     const target = e.target;
 
     if (target === document.querySelectorAll('.lightbox')[0]) {
       this.closeLightBox();
     }
-  }
+  };
 
   render() {
     let {images, photoIndex} = this.props;

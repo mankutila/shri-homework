@@ -1,26 +1,21 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import {PictureList} from "../PictureList/PictureList";
-import {Lightbox} from "../Lightbox/Lightbox";
-import {Infinite} from "../Infinite/Infinite";
-import {Tags} from "../Tags/Tags";
+import { PictureList } from "../PictureList/PictureList";
+import { Lightbox } from "../Lightbox/Lightbox";
+import { Infinite } from "../Infinite/Infinite";
+import { Tags } from "../Tags/Tags";
 
 import './Gallery.css'
 
 class GalleryComponent extends Component {
-  constructor() {
-    super();
 
-    this.fetchImages = this.fetchImages.bind(this);
-  }
-
-  fetchImages(firstLoad = false) {
+  fetchImages = (firstLoad = false) => {
     const COUNT = 50,
           page = this.props.page,
           url = `https://pixabay.com/api/?`+
                 `key=8532246-55268eb0f8f42379b33ae8c5d`+
-                `&q=birds`+
+                `&q=architecture`+
                 `&image_type=photo`+
                 `&editors_choice=true&safesearch=true`+
                 `&per_page=${COUNT}`+
@@ -30,7 +25,7 @@ class GalleryComponent extends Component {
       type: 'LOAD_IMAGES'
     });
 
-    fetch('https://cors-anywhere.herokuapp.com/' + url) //proxy for cors requests
+    fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
         if (firstLoad) {
@@ -45,9 +40,9 @@ class GalleryComponent extends Component {
           page: page + 1,
           loading: false
         });
-        console.log('TOTAL:', this.props);
-        console.log(data);
-        console.log('IMAGES LENGTH:', this.props.images.length);
+        // console.log('TOTAL:', this.props);
+        // console.log(data);
+        // console.log('IMAGES LENGTH:', this.props.images.length);
         if (this.props.total === this.props.images.length) {
           this.props.dispatch({type: 'ALL_LOADED'});
         }
@@ -58,7 +53,7 @@ class GalleryComponent extends Component {
           error
         });
       });
-  }
+  };
 
   componentDidMount() {
     this.fetchImages(true);

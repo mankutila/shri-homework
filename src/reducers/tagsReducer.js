@@ -1,8 +1,6 @@
-export const tagsReducer = function(state, action) {
+export default function (state) {
   if (!state) {
     return {};
   }
-
   return state;
-
-};
+}

@@ -1,6 +1,6 @@
 const initialState = {
   isOpen: false,
-  photoIndex: 0
+  photoIndex: 0,
 };
 
 export const lightboxReducer = function(state = initialState, action) {

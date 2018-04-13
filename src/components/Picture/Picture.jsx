@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import './Picture.css'
+import React, { Component } from 'react';
+import './Picture.css';
 
 export class Picture extends Component {
   state = {

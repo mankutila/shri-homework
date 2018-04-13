@@ -1,17 +1,11 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './Infinite.css';
 
 const THRESHOLD = 500;
 
 export class InfiniteComponent extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.onScroll = this.onScroll.bind(this);
-  }
 
   componentDidMount() {
     document.addEventListener('scroll', this.onScroll, {passive: true});
@@ -21,7 +15,7 @@ export class InfiniteComponent extends Component {
     document.removeEventListener('scroll', this.onScroll);
   }
 
-  onScroll() {
+  onScroll = () => {
     if (!this.container || this.props.loading) {
       return;
     }
@@ -33,12 +27,12 @@ export class InfiniteComponent extends Component {
     if (scrollTop + windowHeight >= containerHeight - THRESHOLD && !this.props.allLoaded) {
       this.nextPage();
     }
-  }
+  };
 
   async nextPage() {
     try {
       await this.props.fetchImages();
-    } catch(error) {
+    } catch (error) {
       this.props.dispatch({
         type: 'LOAD_ERROR',
         error

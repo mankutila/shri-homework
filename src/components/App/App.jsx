@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Provider} from 'react-redux';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 
-import {Gallery} from "../Gallery/Gallery";
+import { Gallery } from "../Gallery/Gallery";
 import './App.css';
 
-import {createStore, compose, applyMiddleware} from 'redux';
-import {mainReducer} from "../../reducers/mainReducer";
+import { createStore, compose, applyMiddleware } from 'redux';
+import { mainReducer } from "../../reducers/mainReducer";
 
 function middleware({dispatch, getState}) {
   return next => action => {

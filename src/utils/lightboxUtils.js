@@ -1,6 +1,6 @@
 export const addBodyStyles = (state) => {
   document.body.classList.add('body-fixed');
-  document.body.style.paddingRight = 40 + state.paddingRight + 'px';
+  document.body.style.paddingRight = `${40 + state.paddingRight}px`;
 };
 
 export const removeBodyStyles = () => {

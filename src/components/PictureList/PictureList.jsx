@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import {Picture} from "../Picture/Picture";
+import { Picture } from "../Picture/Picture";
 
 class PictureListComponent extends Component {
   constructor() {

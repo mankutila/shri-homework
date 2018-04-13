@@ -1,19 +1,17 @@
-import React, {Component} from 'react';
-
-import {Picture} from "../Picture/Picture";
+import React, { Component } from 'react';
 
 const TAGS = [
   {
-    title: "Архитектура",
-    slug: "architecture"
+    title: 'Архитектура',
+    slug: 'architecture'
   },
   {
-    title: "Океан",
-    slug: "ocean"
+    title: 'Океан',
+    slug: 'ocean'
   },
   {
-    title: "Птицы",
-    slug: "birds"
+    title: 'Птицы',
+    slug: 'birds'
   }
 ];
 
