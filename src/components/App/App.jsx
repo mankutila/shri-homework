@@ -5,7 +5,7 @@ import {Gallery} from "../Gallery/Gallery";
 import './App.css';
 
 import {createStore, compose, applyMiddleware} from 'redux';
-import {galleryReducer} from "../../reducers/galleryReducer";
+import {mainReducer} from "../../reducers/mainReducer";
 
 function middleware({dispatch, getState}) {
   return next => action => {
@@ -20,7 +20,7 @@ function middleware({dispatch, getState}) {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  galleryReducer,
+  mainReducer,
   undefined,
   composeEnhancers(
     applyMiddleware(middleware)

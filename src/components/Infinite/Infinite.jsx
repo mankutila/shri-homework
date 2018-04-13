@@ -65,9 +65,9 @@ export class InfiniteComponent extends Component {
 }
 
 const stateToProps = (state) => ({
-  loading: state.loading,
-  allLoaded: state.allLoaded,
-  error: state.error
+  loading: state.images.loading,
+  allLoaded: state.images.allLoaded,
+  error: state.images.error
 });
 
 export const Infinite = connect(stateToProps)(InfiniteComponent);

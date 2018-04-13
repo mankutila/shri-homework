@@ -24,6 +24,8 @@ class PictureListComponent extends Component {
 
         {total === 0 && !loading && <div className="gallery__empty">Нет никаких изображений по этой теме.</div>}
 
+
+
         {images.map((item, index) => <Picture openLightBox={this.openLightbox}
                                               key={index}
                                               index={index}
@@ -34,10 +36,10 @@ class PictureListComponent extends Component {
 }
 
 const stateToProps = (state) => ({
-  images: state.images,
-  total: state.total,
-  loading: state.loading,
-  error: state.error
+  images: state.images.images,
+  total: state.images.total,
+  loading: state.images.loading,
+  error: state.images.error
 });
 
 export const PictureList = connect(stateToProps)(PictureListComponent);

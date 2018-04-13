@@ -116,9 +116,9 @@ export class LightboxComponent extends Component {
 }
 
 const stateToProps = (state) => ({
-  images: state.images,
-  error: state.error,
-  photoIndex: state.photoIndex
+  images: state.images.images,
+  error: state.images.error,
+  photoIndex: state.lightbox.photoIndex
 });
 
 export const Lightbox = connect(stateToProps)(LightboxComponent);
