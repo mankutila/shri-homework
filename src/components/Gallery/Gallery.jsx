@@ -8,7 +8,7 @@ import { Tags } from "../Tags/Tags";
 
 import './Gallery.css'
 
-class GalleryComponent extends Component {
+export class GalleryComponent extends Component {
 
   fetchImages = (tag, firstLoad = false) => {
     const COUNT = 50,
