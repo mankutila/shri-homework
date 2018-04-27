@@ -11,7 +11,7 @@ module.exports = {
   },
   sets: {
     desktop: {
-      files: ['src/gemini/gallery-test.gemini.js', 'src/gemini/lightbox-test.gemini.js'],
+      files: 'src/gemini/',
       browsers: ['chrome']
     }
   }
