@@ -14,14 +14,14 @@ export class GalleryComponent extends Component {
   }
 
   fetchImages = (tag, firstLoad = false) => {
-    const COUNT = 50,
-          page = firstLoad ? 1 : this.props.page,
-          url = `https://pixabay.com/api/?`+
-                `key=8532246-55268eb0f8f42379b33ae8c5d`+
-                `&q=${tag}`+
-                `&image_type=photo`+
-                `&editors_choice=true&safesearch=true`+
-                `&per_page=${COUNT}`+
+    const COUNT = 50;
+    const page = firstLoad ? 1 : this.props.page;
+    const url = `https://pixabay.com/api/?` +
+                `key=8532246-55268eb0f8f42379b33ae8c5d` +
+                `&q=${tag}` +
+                `&image_type=photo` +
+                `&editors_choice=true&safesearch=true` +
+                `&per_page=${COUNT}` +
                 `&page=${page}`;
 
     this.props.dispatch({
@@ -53,9 +53,9 @@ export class GalleryComponent extends Component {
     const { isOpen } = this.props;
 
     return (
-      <Infinite fetchImages={ this.fetchImages }>
+      <Infinite fetchImages={this.fetchImages}>
 
-        <Tags fetchImages={ this.fetchImages } />
+        <Tags fetchImages={this.fetchImages} />
 
         <PictureList />
 
