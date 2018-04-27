@@ -7,7 +7,7 @@ import './App.css';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { mainReducer } from "../../reducers/mainReducer";
 
-function middleware({dispatch, getState}) {
+function middleware({ dispatch, getState }) {
   return next => action => {
     if (typeof action === 'function') {
       return action(dispatch, getState);
