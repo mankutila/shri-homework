@@ -9,4 +9,4 @@ script:
   - yarn lint
   - yarn test
 
-after_script: yarn deploy
+after_script: yarn build
