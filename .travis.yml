@@ -8,5 +8,3 @@ cache: yarn
 script:
   - yarn lint
   - yarn test
-
-after_script: yarn build
