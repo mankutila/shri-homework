@@ -5,17 +5,16 @@ import { Gallery } from './Gallery';
 
 const shallowWithStore = (component, store) => {
   const context = {
-    store,
+    store
   };
   return shallow(component, { context });
 };
 
 it('renders correctly', () => {
-
   const testState = {
     images: {
       images: [],
-      page: 1,
+      page: 1
     },
     lightbox: {
       isOpen: false
@@ -27,7 +26,7 @@ it('renders correctly', () => {
   };
   const store = createMockStore(testState);
 
-  const wrapper = shallowWithStore(<Gallery />, store)
+  const wrapper = shallowWithStore(<Gallery />, store);
 
   expect(wrapper).toMatchSnapshot();
 });

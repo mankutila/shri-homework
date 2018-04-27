@@ -24,14 +24,16 @@ class PictureListComponent extends Component {
     return (
       <section className="gallery">
 
-        { total === 0 && !loading && !error && <div className="gallery__message">Нет никаких изображений по этой теме.</div> }
+        { total === 0 && !loading && !error && <div className="gallery__message">
+          Нет никаких изображений по этой теме.
+        </div> }
 
         { error && !loading && <div className="gallery__message">Ошибка загрузки изображений :(</div> }
 
-        { images.map((item, index) => <Picture openLightBox={this.openLightbox}
-                                              key={index}
-                                              index={index}
-                                              imgData={item}/>) }
+        { images.map((item, index) => {
+          return <Picture openLightBox={this.openLightbox} key={index} index={index} imgData={item}/>;
+        })
+        }
       </section>
     );
   }

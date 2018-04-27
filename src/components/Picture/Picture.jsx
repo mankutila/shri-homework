@@ -8,12 +8,12 @@ export class Picture extends Component {
 
   componentDidMount() {
     if (this.image && this.image.naturalHeight > 0) {
-      this.setState({hidden: false});
+      this.setState({ hidden: false });
     }
   }
 
   render() {
-    let {imgData, openLightBox, index} = this.props;
+    let { imgData, openLightBox, index } = this.props;
 
     if (!imgData) {
       return null;
@@ -34,10 +34,10 @@ export class Picture extends Component {
         href={imgData.largeImageURL}
       >
         <img
-          ref={(node) => this.image = node}
+          ref={(node) => {this.image = node;}}
           className={`gallery__item-img ${this.state.hidden ? 'gallery__item-img--hidden' : ''}`}
           src={imgData.webformatURL}
-          onLoad={() => this.setState({hidden: false})}
+          onLoad={() => this.setState({ hidden: false })}
           alt={`Tags: ${imgData.tags}`}
         />
       </a>

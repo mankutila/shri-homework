@@ -5,13 +5,12 @@ import { Infinite } from './Infinite';
 
 const shallowWithStore = (component, store) => {
   const context = {
-    store,
+    store
   };
   return shallow(component, { context });
 };
 
 it('renders correctly', () => {
-
   const testState = {
     images: {
       images: [],
@@ -28,7 +27,7 @@ it('renders correctly', () => {
   };
   const store = createMockStore(testState);
 
-  const wrapper = shallowWithStore(<Infinite />, store)
+  const wrapper = shallowWithStore(<Infinite />, store);
 
   expect(wrapper).toMatchSnapshot();
 });

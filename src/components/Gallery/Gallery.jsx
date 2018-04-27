@@ -6,9 +6,12 @@ import { Lightbox } from "../Lightbox/Lightbox";
 import { Infinite } from "../Infinite/Infinite";
 import { Tags } from "../Tags/Tags";
 
-import './Gallery.css'
+import './Gallery.css';
 
 export class GalleryComponent extends Component {
+  componentDidMount() {
+    this.fetchImages(this.props.current, true);
+  }
 
   fetchImages = (tag, firstLoad = false) => {
     const COUNT = 50,
@@ -24,7 +27,6 @@ export class GalleryComponent extends Component {
     this.props.dispatch({
       type: 'LOAD_IMAGES'
     });
-
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
@@ -46,10 +48,6 @@ export class GalleryComponent extends Component {
       })
       .catch(() => this.props.dispatch({ type: 'LOAD_ERROR' }));
   };
-
-  componentDidMount() {
-    this.fetchImages(this.props.current, true);
-  }
 
   render() {
     const { isOpen } = this.props;

@@ -6,9 +6,8 @@ import './Infinite.css';
 const THRESHOLD = 500;
 
 export class InfiniteComponent extends Component {
-
   componentDidMount() {
-    document.addEventListener('scroll', this.onScroll, {passive: true});
+    document.addEventListener('scroll', this.onScroll, { passive: true });
   }
 
   componentWillUnmount() {
@@ -20,9 +19,9 @@ export class InfiniteComponent extends Component {
       return;
     }
 
-    let scrollTop = document.body.scrollTop || document.documentElement.scrollTop,
-      containerHeight = this.container.clientHeight,
-      windowHeight = window.innerHeight;
+    let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+    let containerHeight = this.container.clientHeight;
+    let windowHeight = window.innerHeight;
 
     if (scrollTop + windowHeight >= containerHeight - THRESHOLD && !this.props.allLoaded) {
       this.nextPage();
@@ -41,7 +40,7 @@ export class InfiniteComponent extends Component {
 
   render() {
     return (
-      <div ref={(container) => this.container = container}>
+      <div ref={(container) => {this.container = container;}}>
 
         {this.props.children}
 

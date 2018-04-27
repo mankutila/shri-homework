@@ -10,7 +10,7 @@ export class LightboxComponent extends Component {
     imageLoading: true,
     hidden: true,
     offsetTop: 0,
-    paddingRight: window.innerWidth - document.documentElement.clientWidth,
+    paddingRight: window.innerWidth - document.documentElement.clientWidth
   };
 
   componentDidMount() {
@@ -41,18 +41,18 @@ export class LightboxComponent extends Component {
   };
 
   moveNext = () => {
-    const {images, photoIndex} = this.props;
+    const { images, photoIndex } = this.props;
     this.props.dispatch({
       type: 'TOGGLE_IMAGE',
       photoIndex: (photoIndex + 1) % images.length
     });
-    this.setState({imageLoading: true});
+    this.setState({ imageLoading: true });
   };
 
   closeLightBox = () => {
     this.props.dispatch({
       type: 'CLOSE_LIGHTBOX'
-    })
+    });
   };
 
   handleKeyDown = (e) => {
@@ -78,11 +78,11 @@ export class LightboxComponent extends Component {
   };
 
   imageError = () => {
-    this.props.dispatch({type: 'IMAGE_ERROR'});
+    this.props.dispatch({ type: 'IMAGE_ERROR' });
   };
 
   render() {
-    let {images, photoIndex, error} = this.props;
+    let { images, photoIndex, error } = this.props;
 
     return (
       <div className={`lightbox ${!this.state.hidden ? 'lightbox--visible' : ''}`}
@@ -93,24 +93,26 @@ export class LightboxComponent extends Component {
 
         <button className="lightbox__prev" onClick={this.movePrev} aria-label="Предыдущее фото">Предыдущее фото</button>
 
-        <img ref={(node) => this.image = node}
+        <img ref={(node) => {this.image = node;}}
           className={`lightbox__img ${this.state.imageLoading || error ? 'lightbox__img--hidden' : ''}`}
           src={images[photoIndex].largeImageURL}
           alt={`Tags: ${images[photoIndex].tags}`}
-          onLoad={() => this.setState({imageLoading: false})}
+          onLoad={() => this.setState({ imageLoading: false })}
           onError={this.imageError}
         />
 
         { this.state.imageLoading ? <div className="spinner">Загрузка...</div> : '' }
 
-        { !this.state.imageLoading && error ? <div className="lightbox__message">Ошибка при загрузке изображения</div> : '' }
+        { !this.state.imageLoading && error ? <div className="lightbox__message">
+          Ошибка при загрузке изображения
+        </div> : '' }
 
         <button className="lightbox__next" onClick={this.moveNext} aria-label="Следующее фото">Следующее фото</button>
 
         <button className="lightbox__close" onClick={this.closeLightBox} aria-label="Закрыть">Закрыть</button>
 
       </div>
-    )
+    );
   }
 }
 

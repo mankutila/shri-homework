@@ -18,16 +18,14 @@ const TAGS = [
   }
 ];
 
-function TagsComponent({current, fetchImages, dispatch}) {
-
+function TagsComponent({ current, fetchImages, dispatch }) {
   return (
     <section className="tags">
-      {TAGS.map( ({ title, slug }, index ) => (
+      {TAGS.map(({ title, slug }, index) => (
         <button
           key={slug}
           className={`tag ${slug === current ? 'tag--current' : ''}`}
           onClick={() => {
-
             if (slug !== current) {
               dispatch({
                 type: 'SET_TAG',
@@ -38,7 +36,6 @@ function TagsComponent({current, fetchImages, dispatch}) {
               });
               fetchImages(slug, true);
             }
-
           }}
         >
           {title}
@@ -46,7 +43,6 @@ function TagsComponent({current, fetchImages, dispatch}) {
       ))}
     </section>
   );
-
 }
 
 const stateToProps = (state) => ({

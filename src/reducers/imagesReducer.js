@@ -8,7 +8,6 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-
   if (action.type === 'APPEND_IMAGES') {
     return {
       ...state,
@@ -52,5 +51,4 @@ export default function(state = initialState, action) {
   }
 
   return state;
-
-};
+}
